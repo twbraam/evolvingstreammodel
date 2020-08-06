@@ -1,0 +1,31 @@
+# sbt
+# (may want to keep parts of 'project')
+train/bin/
+train/project/
+train/target/
+train/build/
+test/bin/
+test/project/
+test/target/
+test/build/
+*.sc
+
+# intellij idea
+*.log
+*.iml
+*.ipr
+*.iws
+train/.idea
+test/.idea
+
+# mac
+.DS_Store
+
+# other?
+.history
+.scala_dependencies
+.cache
+.cache-main
+
+#general
+*.class
