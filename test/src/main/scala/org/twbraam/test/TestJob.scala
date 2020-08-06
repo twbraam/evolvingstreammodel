@@ -16,36 +16,28 @@
  * limitations under the License.
  */
 
-package spendreport
+package org.twbraam.test
 
 import org.apache.flink.streaming.api.scala._
-import org.apache.flink.walkthrough.common.sink.AlertSink
-import org.apache.flink.walkthrough.common.entity.Alert
-import org.apache.flink.walkthrough.common.entity.Transaction
-import org.apache.flink.walkthrough.common.source.TransactionSource
+import org.twbraam.test.housesource.{House, HouseSink, HouseSource}
 
 /**
   * Skeleton code for the DataStream code walkthrough
   */
-object FraudDetectionJob {
-
+object TestJob {
+  
   @throws[Exception]
   def main(args: Array[String]): Unit = {
     val env: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment
 
-    val transactions: DataStream[Transaction] = env
-      .addSource(new TransactionSource)
-      .name("transactions")
+    val houses: DataStream[House] = env
+      .addSource(new HouseSource)
+      .name("houses")
 
-    val alerts: DataStream[Alert] = transactions
-      .keyBy(transaction => transaction.getAccountId)
-      .process(new FraudDetector)
-      .name("fraud-detector")
+    houses
+      .addSink(new HouseSink)
+      .name("send-houses")
 
-    alerts
-      .addSink(new AlertSink)
-      .name("send-alerts")
-
-    env.execute("Fraud Detection")
+    env.execute("Test")
   }
 }
