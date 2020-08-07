@@ -21,6 +21,8 @@ package org.twbraam.test
 import org.apache.flink.api.scala._
 import org.apache.flink.streaming.api.datastream.DataStream
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment
+import org.apache.flink.streaming.api.windowing.assigners.TumblingEventTimeWindows
+import org.apache.flink.streaming.api.windowing.time.Time
 import org.twbraam.test.housesource.{House, HouseSource}
 
 object TestJob {
@@ -31,7 +33,10 @@ object TestJob {
       .addSource(new HouseSource)
       .name("houses")
 
-    houses.print()
+    val transformed = houses
+      //.windowAll(TumblingEventTimeWindows.of(Time.minutes(5)))
+      .map(new HouseFunction)
+      .print
 
     env.execute("Flink Scala API Skeleton")
   }
