@@ -8,6 +8,7 @@ test/bin/
 test/project/
 test/target/
 test/build/
+test/mainRunner/*
 *.sc
 
 # intellij idea

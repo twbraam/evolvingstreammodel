@@ -1,4 +1,6 @@
-/*
+package org.twbraam.test
+
+/**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -16,17 +18,12 @@
  * limitations under the License.
  */
 
-package org.twbraam.test
+import org.apache.flink.api.scala._
+import org.apache.flink.streaming.api.datastream.DataStream
+import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment
+import org.twbraam.test.housesource.{House, HouseSource}
 
-import org.apache.flink.streaming.api.scala._
-import org.twbraam.test.housesource.{House, HouseSink, HouseSource}
-
-/**
-  * Skeleton code for the DataStream code walkthrough
-  */
 object TestJob {
-  
-  @throws[Exception]
   def main(args: Array[String]): Unit = {
     val env: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment
 
@@ -34,10 +31,8 @@ object TestJob {
       .addSource(new HouseSource)
       .name("houses")
 
-    houses
-      .addSink(new HouseSink)
-      .name("send-houses")
+    houses.print()
 
-    env.execute("Test")
+    env.execute("Flink Scala API Skeleton")
   }
 }
