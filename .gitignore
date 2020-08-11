@@ -5,7 +5,6 @@ train/project/
 train/target/
 train/build/
 test/bin/
-test/project/
 test/target/
 test/build/
 test/mainRunner/*
