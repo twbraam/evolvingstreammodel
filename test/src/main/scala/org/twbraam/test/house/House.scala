@@ -1,3 +1,3 @@
-package org.twbraam.test.housesource
+package org.twbraam.test.house
 
 case class House(data: String, timestamp: Long)

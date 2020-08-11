@@ -1,4 +1,4 @@
-package org.twbraam.test.housesource
+package org.twbraam.test.house
 
 import org.apache.flink.annotation.Public
 import org.apache.flink.streaming.api.functions.source.FromIteratorFunction

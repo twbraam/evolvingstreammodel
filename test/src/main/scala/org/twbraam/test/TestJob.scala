@@ -25,7 +25,7 @@ import org.apache.flink.streaming.api.datastream.{BroadcastStream, DataStream}
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment
 import org.apache.flink.streaming.api.windowing.assigners.TumblingEventTimeWindows
 import org.apache.flink.streaming.api.windowing.time.Time
-import org.twbraam.test.housesource.{House, HouseSource}
+import org.twbraam.test.house.{House, HouseSource}
 import org.twbraam.test.modelsignal.{ModelSignal, ModelSignalSource}
 
 object TestJob {
@@ -38,10 +38,11 @@ object TestJob {
 
     val modelSignals: BroadcastStream[ModelSignal] = env
       .addSource(new ModelSignalSource)
-      .broadcast(new MapStateDescriptor("RulesBroadcastState",
+/*      .broadcast(new MapStateDescriptor("modelSignals",
         BasicTypeInfo.INT_TYPE_INFO,
         TypeInformation.of(new TypeHint[String] {}))
-      )
+      )*/
+      .broadcast()
 
     val connected = houses
       //.windowAll(TumblingEventTimeWindows.of(Time.minutes(5)))

@@ -17,7 +17,7 @@ final class ModelSignalIterator private(val bounded: Boolean) extends util.Itera
     else false
 
   override def next: ModelSignal = {
-    Thread.sleep(8000)
+    Thread.sleep(3500)
     val signal = ModelSignal(index)
     index += 1
     signal

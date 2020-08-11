@@ -1,4 +1,4 @@
-package org.twbraam.test.housesource
+package org.twbraam.test.house
 
 import java.io.Serializable
 import java.sql.Timestamp
@@ -19,6 +19,7 @@ final class HouseIterator private(val bounded: Boolean) extends util.Iterator[Ho
     else false
 
   override def next: House = {
+    Thread.sleep(200)
     val house: House = House(
       HouseIterator.data({index += 1; index - 1}),
       timestamp
@@ -34,9 +35,9 @@ object HouseIterator {
   private val INITIAL_TIMESTAMP: Timestamp = Timestamp.valueOf("2019-01-01 00:00:00")
   private val SIX_MINUTES: Long = 6 * 60 * 1000
 
-  private[housesource] def bounded: HouseIterator = new HouseIterator(true)
+  private[house] def bounded: HouseIterator = new HouseIterator(true)
 
-  private[housesource] def unbounded: HouseIterator = new HouseIterator(false)
+  private[house] def unbounded: HouseIterator = new HouseIterator(false)
 
   private val data: List[String] = List(
     "1,60,65.0,8450,7,5,2003,2003,196.0,4,3,4.0,3.0,706,0,150,856,5,856,854,0,1710,1,0,2,1,3,1,4,8,0,,2003.0,2,548,3.0,3.0,0,61,0,0,0,0,,0,2,2008,208500,0,0,0,1,0,0,1,0,1,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0",
