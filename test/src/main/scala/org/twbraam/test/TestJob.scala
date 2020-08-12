@@ -27,22 +27,16 @@ object TestJob {
   def main(args: Array[String]): Unit = {
     val env: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment
 
-
     val houses: DataStream[String] = env
       .addSource(HouseSource.Predef)
       .name("houses")
 
     val modelSignals: BroadcastStream[Int] = env
       .addSource(ModelSignalSource.Kafka)
-/*      .broadcast(new MapStateDescriptor("modelSignals",
-        BasicTypeInfo.INT_TYPE_INFO,
-        TypeInformation.of(new TypeHint[String] {}))
-      )*/
       .map(new ModelSignalToInt)
       .broadcast()
 
     val connected = houses
-      //.windowAll(TumblingEventTimeWindows.of(Time.minutes(5)))
       .connect(modelSignals)
       .process(new HouseBroadcastFunction)
       .print

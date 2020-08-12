@@ -1,4 +1,4 @@
-package org.twbraam.test.house
+package org.twbraam.test.house.sources
 
 import java.io.Serializable
 import java.sql.Timestamp
@@ -6,12 +6,12 @@ import java.util
 
 
 @SerialVersionUID(1L)
-final class HousePredef private(val bounded: Boolean) extends util.Iterator[String] with Serializable {
+final class Predef private(val bounded: Boolean) extends util.Iterator[String] with Serializable {
   private var index: Int = 0
-  private var timestamp: Long = HousePredef.INITIAL_TIMESTAMP.getTime
+  private var timestamp: Long = Predef.INITIAL_TIMESTAMP.getTime
 
   override def hasNext: Boolean =
-    if (index < HousePredef.data.size) true
+    if (index < Predef.data.size) true
     else if (!bounded) {
       index = 0
       true
@@ -20,19 +20,19 @@ final class HousePredef private(val bounded: Boolean) extends util.Iterator[Stri
 
   override def next: String = {
     Thread.sleep(200)
-    HousePredef.data({index += 1; index - 1})
+    Predef.data({index += 1; index - 1})
   }
 }
 
 
 @SerialVersionUID(1L)
-object HousePredef {
+object Predef {
   private val INITIAL_TIMESTAMP: Timestamp = Timestamp.valueOf("2019-01-01 00:00:00")
   private val SIX_MINUTES: Long = 6 * 60 * 1000
 
-  private[house] def bounded: HousePredef = new HousePredef(true)
+  private[house] def bounded: Predef = new Predef(true)
 
-  private[house] def unbounded: HousePredef = new HousePredef(false)
+  private[house] def unbounded: Predef = new Predef(false)
 
   private val data: List[String] = List(
     "1,60,65.0,8450,7,5,2003,2003,196.0,4,3,4.0,3.0,706,0,150,856,5,856,854,0,1710,1,0,2,1,3,1,4,8,0,,2003.0,2,548,3.0,3.0,0,61,0,0,0,0,,0,2,2008,208500,0,0,0,1,0,0,1,0,1,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0",

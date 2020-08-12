@@ -1,11 +1,11 @@
-package org.twbraam.test.modelsignal
+package org.twbraam.test.modelsignal.sources
 
 import java.io.Serializable
 import java.util
 
 
 @SerialVersionUID(1L)
-final class ModelSignalPredef private(val bounded: Boolean) extends util.Iterator[String] with Serializable {
+final class Predef private(val bounded: Boolean) extends util.Iterator[String] with Serializable {
   private var index: Int = 0
 
   override def hasNext: Boolean =
@@ -26,10 +26,10 @@ final class ModelSignalPredef private(val bounded: Boolean) extends util.Iterato
 
 
 @SerialVersionUID(1L)
-object ModelSignalPredef {
+object Predef {
 
-  private[modelsignal] def bounded: ModelSignalPredef = new ModelSignalPredef(true)
+  private[modelsignal] def bounded: Predef = new Predef(true)
 
-  private[modelsignal] def unbounded: ModelSignalPredef = new ModelSignalPredef(false)
+  private[modelsignal] def unbounded: Predef = new Predef(false)
 
 }
