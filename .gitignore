@@ -1,13 +1,13 @@
 # sbt
 # (may want to keep parts of 'project')
+train/bin/
+train/project/
+train/target/
+train/build/
 predictor/bin/
-predictor/project/
 predictor/target/
 predictor/build/
-test/bin/
-test/target/
-test/build/
-test/mainRunner/*
+predictor/mainRunner/*
 *.sc
 
 # intellij idea
@@ -15,8 +15,8 @@ test/mainRunner/*
 *.iml
 *.ipr
 *.iws
+train/.idea
 predictor/.idea
-test/.idea
 
 # mac
 .DS_Store
