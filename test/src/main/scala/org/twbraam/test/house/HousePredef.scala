@@ -6,38 +6,33 @@ import java.util
 
 
 @SerialVersionUID(1L)
-final class HouseIterator private(val bounded: Boolean) extends util.Iterator[House] with Serializable {
+final class HousePredef private(val bounded: Boolean) extends util.Iterator[String] with Serializable {
   private var index: Int = 0
-  private var timestamp: Long = HouseIterator.INITIAL_TIMESTAMP.getTime
+  private var timestamp: Long = HousePredef.INITIAL_TIMESTAMP.getTime
 
   override def hasNext: Boolean =
-    if (index < HouseIterator.data.size) true
+    if (index < HousePredef.data.size) true
     else if (!bounded) {
       index = 0
       true
     }
     else false
 
-  override def next: House = {
+  override def next: String = {
     Thread.sleep(200)
-    val house: House = House(
-      HouseIterator.data({index += 1; index - 1}),
-      timestamp
-    )
-    timestamp += HouseIterator.SIX_MINUTES
-    house
+    HousePredef.data({index += 1; index - 1})
   }
 }
 
 
 @SerialVersionUID(1L)
-object HouseIterator {
+object HousePredef {
   private val INITIAL_TIMESTAMP: Timestamp = Timestamp.valueOf("2019-01-01 00:00:00")
   private val SIX_MINUTES: Long = 6 * 60 * 1000
 
-  private[house] def bounded: HouseIterator = new HouseIterator(true)
+  private[house] def bounded: HousePredef = new HousePredef(true)
 
-  private[house] def unbounded: HouseIterator = new HouseIterator(false)
+  private[house] def unbounded: HousePredef = new HousePredef(false)
 
   private val data: List[String] = List(
     "1,60,65.0,8450,7,5,2003,2003,196.0,4,3,4.0,3.0,706,0,150,856,5,856,854,0,1710,1,0,2,1,3,1,4,8,0,,2003.0,2,548,3.0,3.0,0,61,0,0,0,0,,0,2,2008,208500,0,0,0,1,0,0,1,0,1,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0",

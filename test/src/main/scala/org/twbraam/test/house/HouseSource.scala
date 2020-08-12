@@ -2,29 +2,13 @@ package org.twbraam.test.house
 
 import org.apache.flink.annotation.Public
 import org.apache.flink.streaming.api.functions.source.FromIteratorFunction
+import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumerBase
 
-@Public
-@SerialVersionUID(1L)
 object HouseSource {
 
+  @Public
   @SerialVersionUID(1L)
-  private class RateLimitedIterator[T] private(val inner: Iterator[T]) extends Iterator[T] with Serializable {
-    override def hasNext: Boolean = inner.hasNext
+  case object Predef extends FromIteratorFunction[String](HousePredef.unbounded)
 
-    override def next: T = {
-      try Thread.sleep(100)
-      catch {
-        case e: InterruptedException =>
-          throw new RuntimeException(e)
-      }
-      inner.next
-    }
-  }
-
+  lazy val Kafka: FlinkKafkaConsumerBase[String] = HouseKafka.consumer
 }
-
-@Public
-@SerialVersionUID(1L)
-class HouseSource() extends FromIteratorFunction[House](HouseIterator.unbounded) {
-}
-

@@ -18,30 +18,27 @@ package org.twbraam.test
  * limitations under the License.
  */
 
-import org.apache.flink.api.common.state.{MapStateDescriptor, ValueStateDescriptor}
-import org.apache.flink.api.common.typeinfo.{BasicTypeInfo, TypeHint, TypeInformation}
-import org.apache.flink.api.scala._
 import org.apache.flink.streaming.api.datastream.{BroadcastStream, DataStream}
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment
-import org.apache.flink.streaming.api.windowing.assigners.TumblingEventTimeWindows
-import org.apache.flink.streaming.api.windowing.time.Time
-import org.twbraam.test.house.{House, HouseSource}
-import org.twbraam.test.modelsignal.{ModelSignal, ModelSignalSource}
+import org.twbraam.test.house.HouseSource
+import org.twbraam.test.modelsignal.{ModelSignalSource, ModelSignalToInt}
 
 object TestJob {
   def main(args: Array[String]): Unit = {
     val env: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment
 
-    val houses: DataStream[House] = env
-      .addSource(new HouseSource)
+
+    val houses: DataStream[String] = env
+      .addSource(HouseSource.Predef)
       .name("houses")
 
-    val modelSignals: BroadcastStream[ModelSignal] = env
-      .addSource(new ModelSignalSource)
+    val modelSignals: BroadcastStream[Int] = env
+      .addSource(ModelSignalSource.Kafka)
 /*      .broadcast(new MapStateDescriptor("modelSignals",
         BasicTypeInfo.INT_TYPE_INFO,
         TypeInformation.of(new TypeHint[String] {}))
       )*/
+      .map(new ModelSignalToInt)
       .broadcast()
 
     val connected = houses

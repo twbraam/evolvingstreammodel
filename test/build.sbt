@@ -17,6 +17,7 @@ val flinkDependencies = Seq(
   "org.apache.flink" %% "flink-clients"         % flinkVersion % "provided",
   "org.apache.flink" %% "flink-scala"           % flinkVersion % "provided",
   "org.apache.flink" %% "flink-streaming-scala" % flinkVersion % "provided",
+  "org.apache.flink" %% "flink-connector-kafka" % flinkVersion,
   "ml.dmlc"          %% "xgboost4j"             % "1.0.0"
 )
 
